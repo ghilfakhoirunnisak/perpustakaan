@@ -248,6 +248,18 @@
 
     <script src="{{ asset('js/interceptor.js') }}"></script>
     <script src="{{ asset('js/auth.js') }}"></script>
+    <script>
+        (async () => {
+            const user = await getUserProfile();
+
+            if (!user) return;
+
+            const allowedRole = 'anggota';
+            if (user.role !== allowedRole) {
+                window.location.href = '/login';
+            }
+        })();
+    </script>
     <script src="{{ asset('js/profile.js') }}"></script>
     <script src="{{ asset('js/logout.js') }}"></script>
 

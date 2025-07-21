@@ -1,66 +1,33 @@
-document.addEventListener('DOMContentLoaded', async () => {
-    const currentPath = window.location.pathname;
+// public/js/auth.js
 
-    // Lewatkan validasi jika di halaman login/register/otp
-    if (['/login', '/register', '/otp'].includes(currentPath)) {
-        console.log('Lewat auth.js karena halaman:', currentPath);
-        return;
-    }
-
+window.getUserProfile = async function () {
     const token = localStorage.getItem('auth_token');
-    if (!token) return redirectToLogin();
+    if (!token) {
+        localStorage.clear();
+        window.location.href = '/login';
+        return null;
+    }
 
     try {
         const res = await fetch('/api/profile', {
             headers: {
-                Authorization: token,
-                Accept: 'application/json'
+                'Authorization': `Bearer ${token}`,
+                'Accept': 'application/json'
             }
         });
 
-        if (!res.ok) {
-            localStorage.clear();
-            return redirectToLogin();
-        }
+        if (!res.ok) throw new Error('Unauthorized');
 
-        const { user } = await res.json();
-        const role = user.role?.nama_role || null;
-        const name = user.nama || user.name || '-';
+        const data = await res.json();
+        const user = data.user;
 
-        // Simpan role dan nama jika belum
-        localStorage.setItem('user_role', role);
-        localStorage.setItem('user_name', name);
-
-        // Jika akses /dashboard umum → redirect ke sesuai role
-        if (currentPath === '/dashboard') {
-            return redirectToDashboard(role);
-        }
-
-        // Cek jika user masuk ke halaman yang tidak sesuai rolenya
-        if (
-            (role === 'admin' && !currentPath.startsWith('/admin')) ||
-            (role === 'verifikator' && !currentPath.startsWith('/verifikator')) ||
-            (role === 'anggota' && !currentPath.startsWith('/anggota'))
-        ) {
-            return redirectToDashboard(role);
-        }
-
+        localStorage.setItem('user_role', user.role);
+        localStorage.setItem('user_name', user.nama);
+        return user;
     } catch (error) {
-        console.error('Autentikasi gagal:', error);
+        console.error(error);
         localStorage.clear();
-        return redirectToLogin();
-    }
-
-    function redirectToDashboard(role) {
-        const routeMap = {
-            admin: '/admin/dashboard',
-            verifikator: '/verifikator/dashboard',
-            anggota: '/anggota/dashboard'
-        };
-        window.location.href = routeMap[role] || '/login';
-    }
-
-    function redirectToLogin() {
         window.location.href = '/login';
+        return null;
     }
-});
+};

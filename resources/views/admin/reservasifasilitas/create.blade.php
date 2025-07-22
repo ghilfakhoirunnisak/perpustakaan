@@ -88,7 +88,6 @@
     <script>
         const token = localStorage.getItem('auth_token');
 
-        // Load user dengan role anggota
         fetch('/api/user?role=anggota', {
                 headers: {
                     'Authorization': 'Bearer ' + token,

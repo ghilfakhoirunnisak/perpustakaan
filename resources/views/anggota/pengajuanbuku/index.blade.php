@@ -70,7 +70,7 @@
                                 <span class="badge bg-${getBadgeClass(item.status)}">${item.status}</span>
                             </td>
                             <td><ul class="mb-0 ps-3">${detailList}</ul></td>
-                            <td>${item.catatan}</td>
+                            <td>${item.catatan || "-"}</td>
                             <td class="text-center">
                                 <a href="/anggota/pengajuanbuku/${item.id_pengajuan_buku}/show" class="btn btn-sm btn-info">
                                     <i class="bx bx-show"></i>

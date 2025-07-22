@@ -19,10 +19,20 @@ class PeminjamanBuku extends Model
     public $timestamps = true;
 
     /**
-    * Ubah format created_at dan updated_at menjadi Y-m-d H:i:s
-    */
+     * Ubah format created_at dan updated_at menjadi Y-m-d H:i:s
+     */
     protected function serializeDate(DateTimeInterface $date): string
     {
         return $date->format('Y-m-d H:i:s');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user', 'id_user');
+    }
+
+    public function buku()
+    {
+        return $this->belongsTo(Buku::class, 'id_buku', 'id_buku');
     }
 }

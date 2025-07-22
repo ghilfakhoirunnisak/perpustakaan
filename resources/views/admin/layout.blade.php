@@ -152,8 +152,8 @@
                     </li>
 
                     <!-- Peminjaman Buku -->
-                    <li class="menu-item">
-                        <a href="cards-basic.html" class="menu-link">
+                    <li class="menu-item {{ request()->routeIs('admin.peminjamanbuku.*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.peminjamanbuku.index') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-task"></i>
                             <div data-i18n="Basic">Peminjaman Buku</div>
                         </a>

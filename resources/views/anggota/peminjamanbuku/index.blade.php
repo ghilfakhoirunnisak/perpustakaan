@@ -40,12 +40,11 @@
                                 <th>Tanggal Pinjam</th>
                                 <th>Tanggal Kembali</th>
                                 <th>Status</th>
-                                <th style="width: 100px;">Aksi</th>
                             </tr>
                         </thead>
                         <tbody id="peminjamanTbody">
                             <tr>
-                                <td colspan="7" class="text-center">Memuat data...</td>
+                                <td colspan="6" class="text-center">Memuat data...</td>
                             </tr>
                         </tbody>
                     </table>
@@ -94,11 +93,6 @@
                     <td class="text-center">${item.tanggal_pinjam}</td>
                     <td class="text-center">${tanggalKembali}</td>
                     <td class="text-center"><span class="badge bg-${statusBadge} text-capitalize">${item.status}</span></td>
-                    <td class="text-center">
-                        <a href="/anggota/peminjamanbuku/${item.id_peminjaman}/show" class="text-info" title="Detail">
-                            <i class="bx bx-show bx-sm"></i>
-                        </a>
-                    </td>
                 </tr>
             `;
                     });

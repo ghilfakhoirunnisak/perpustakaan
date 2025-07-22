@@ -10,7 +10,7 @@
                     <a href="/login" class="btn btn-primary btn-lg px-4 py-2 fw-bold">Masuk Sekarang</a>
                 </div>
                 <div class="col-md-6 order-md-2 order-1 d-flex justify-content-center align-items-center">
-                    <img src="https://images.unsplash.com/photo-1521587765099-efb68a73747b?q=80&w=1500&auto=format&fit=crop" class="img-fluid rounded shadow-lg mb-4 mb-md-0" alt="Perpustakaan Modern">
+                    <img src="{{asset('img/landing.png')}}" class="img-fluid rounded mb-4 mb-md-0" alt="Perpustakaan Modern">
                 </div>
             </div>
         </div>

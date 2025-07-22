@@ -10,6 +10,7 @@ use App\Http\Controllers\FasilitasController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\MailerController;
+use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\PenerbitBukuController;
 use App\Http\Controllers\PengajuanBukuController;
 use App\Http\Controllers\PenulisBukuController;
@@ -101,6 +102,12 @@ Route::middleware(['auth:sanctum', 'check.token.expiry'])->group(function () {
         Route::put('/{id_detail_pengajuan_buku}', [DetailPengajuanBukuController::class, 'update']);
         Route::put('/{id_detail_pengajuan_buku}', [DetailPengajuanBukuController::class, 'destroy']);
     });
+    Route::prefix('peminjamanbuku')->group(function () {
+        Route::get('/', [PeminjamanController::class, 'index']);
+        Route::get('/{id_peminjaman_buku}', [PeminjamanController::class, 'show']);
+
+    });
+
 
     Route::prefix('fasilitas')->group(function () {
         Route::get('/', [FasilitasController::class, 'index']);
@@ -120,7 +127,7 @@ Route::middleware(['auth:sanctum', 'check.token.expiry'])->group(function () {
             Route::put('/{id_reservasi}', [ReservasiFasilitasController::class, 'updateByAdmin']);
         });
         Route::middleware('role:anggota')->group(function () {
-            Route::post('/', [ReservasiFasilitasController::class, 'storeByAnggota']);
+            Route::post('/anggota', [ReservasiFasilitasController::class, 'storeByAnggota']);
         });
         Route::middleware('role:admin,anggota')->group(function () {
             Route::delete('/{id_reservasi}', [ReservasiFasilitasController::class, 'destroy']);

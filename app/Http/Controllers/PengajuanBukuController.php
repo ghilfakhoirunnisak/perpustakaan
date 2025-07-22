@@ -23,7 +23,6 @@ class PengajuanBukuController extends Controller
 
             $query = PengajuanBuku::with(['detail_pengajuan_buku.buku']);
 
-            // Jika anggota, hanya lihat miliknya
             if ($role === 'anggota') {
                 $query->where('id_user', $user->id_user);
             }

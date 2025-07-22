@@ -58,6 +58,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/{id_pengajuan_buku}/show', fn($id_pengajuan_buku) => view('admin.pengajuanbuku.show', compact('id_pengajuan_buku')))->name('show');
         Route::get('/{id_pengajuan_buku}/edit', fn($id_pengajuan_buku) => view('admin.pengajuanbuku.edit', compact('id_pengajuan_buku')))->name('edit');
     });
+    Route::prefix('peminjamanbuku')->name('peminjamanbuku.')->group(function () {
+        Route::view('/', 'admin.peminjamanbuku.index')->name('index');
+        Route::get('/{id_peminjaman_buku}/show', fn($id_peminjaman_buku) => view('admin.peminjamanbuku.show', compact('id_peminjaman_buku')))->name('show');
+    });
     Route::prefix('fasilitas')->name('fasilitas.')->group(function () {
         Route::view('/', 'admin.fasilitas.index')->name('index');
         Route::view('/create', 'admin.fasilitas.create')->name('create');

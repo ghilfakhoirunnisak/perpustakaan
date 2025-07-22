@@ -94,7 +94,7 @@
                 const dokumenInput = document.getElementById('dokumen');
 
                 try {
-                    const res = await fetch('/api/reservasifasilitas', {
+                    const res = await fetch('/api/reservasifasilitas/anggota', {
                         method: 'POST',
                         headers: {
                             'Accept': 'application/json'

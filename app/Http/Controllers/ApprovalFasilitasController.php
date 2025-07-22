@@ -84,14 +84,11 @@ class ApprovalFasilitasController extends Controller
                 return response()->json(['success' => false, 'message' => 'Anda sudah memberikan keputusan untuk reservasi ini.'], 400);
             }
 
-            // Cek urutan giliran
             $logSaatIni = LogApproval::where('id_reservasi', $id_reservasi)->count();
-            // PENTING: Cek giliran verifikasi hanya jika status reservasi masih 'diproses'
             if ($reservasiFasilitas->status === 'diproses' && ($logSaatIni + 1 !== $verifikator->level)) {
                 return response()->json(['success' => false, 'message' => 'Belum giliran Anda untuk verifikasi atau reservasi sudah diproses verifikator sebelumnya.'], 403);
             }
 
-            // Simpan log approval
             LogApproval::create([
                 'id_reservasi'   => $id_reservasi,
                 'id_verifikator' => $verifikator->id_verifikator,
@@ -100,7 +97,6 @@ class ApprovalFasilitasController extends Controller
             ]);
 
             if ($request->status === 'ditolak') {
-                // Update status dan catatan di tabel reservasi_fasilitas menjadi DITOLAK
                 $reservasiFasilitas->update([
                     'status' => 'ditolak',
                     'catatan' => $request->catatan
@@ -109,14 +105,12 @@ class ApprovalFasilitasController extends Controller
                     'success' => true,
                     'message' => 'Reservasi fasilitas berhasil ditolak.'
                 ], 200);
-            } else { // Jika status adalah 'disetujui'
+            } else {
                 $totalVerifikator = Verifikator::count();
-                // Hitung jumlah persetujuan yang sudah ada di LogApproval
                 $totalDisetujui = LogApproval::where('id_reservasi', $id_reservasi)
                                                 ->where('status', 'disetujui')
                                                 ->count();
 
-                // Jika jumlah persetujuan sama dengan total verifikator yang dibutuhkan
                 if ($totalDisetujui === $totalVerifikator) {
                     $reservasiFasilitas->update([
                         'status' => 'disetujui'
@@ -132,6 +126,6 @@ class ApprovalFasilitasController extends Controller
                     ], 200);
                 }
             }
-        }, 'approve-verifikator-reservasi'); // Ubah nama transaction key jika perlu
+        }, 'approve-verifikator-reservasi');
     }
 }
